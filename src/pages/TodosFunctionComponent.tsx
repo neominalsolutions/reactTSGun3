@@ -56,7 +56,6 @@ const TodosFunctionComponent = (props: TodosFunctionComponentProps) => {
 
     {todos.map((item: Todo) => { // map içinde bir html kod blogu döndürmek zorundayız
       return <li key={item.id} style={item.completed ? { color: 'white', background: 'green' } : { color: 'red', background: 'gray' }} >
-
         {item.title}
         {' '} {item.completed ? 'Tamamlandı' : 'Tamamlanmadı'}
       </li>
