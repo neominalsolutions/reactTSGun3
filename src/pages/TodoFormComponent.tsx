@@ -21,11 +21,11 @@ export default function TodoFormComponent(props:TodoFormProps){
     // state üzerinden form resetleme
     e.preventDefault(); 
     props.onFormSubmit(todoForm);
-    setTodoForm({title:'', completed:false});
+    setTodoForm({title:'', completed:false}); // form resetleme işlemi
   }
 
   const completedChange = (e:any) => {
-    setTodoForm({ ...todoForm, completed: e.target.checked })
+    setTodoForm({ ...todoForm, completed: e.target.checked }) // todo form state güncelleme
   }
 
   const titleChanged = (e:any) => {
