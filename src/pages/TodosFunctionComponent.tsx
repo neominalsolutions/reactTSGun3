@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import {TodoAxiosApi, TodoFetchApi} from "../api/todo.api";
 import TodoItemComponent from "./TodoItemComponent";
+import TodoFormComponent, { TodoForm } from "./TodoFormComponent";
 type TodosFunctionComponentProps = {}
 // API'dan gelen istekleri karşılamak için interface kullanırız. Apidaki ismi Dto
 // burada ise interface olarak kullanılıyor.
@@ -14,10 +15,7 @@ export interface Todo {
   completed: boolean;
 }
 
-type TodoForm = {
-  title: string;
-  completed: boolean
-}
+
 
 const TodosFunctionComponent = (props: TodosFunctionComponentProps) => {
 
@@ -34,8 +32,7 @@ const TodosFunctionComponent = (props: TodosFunctionComponentProps) => {
   // not completed olanlar ise arkaplan gri yazı kırmızı olsun
   // completed olanlar tamamlandı diye ekranda görünsün, not completed olanlar ise ekranda tamamlanacak olarak görünsün.
   const [todos, setTodos] = useState<Todo[] | undefined>(undefined);
-  const [todoForm, setTodoForm] = useState<TodoForm>({ title: '', completed: false });
-
+  
   useEffect(()=> {
 
     // artık orta ölçelikli ve büyük ölçekli uygulamalarda bir servisi başka componentlerden veri çekebilir diye veri çekme işlemlerimizi servisleştirip, tek bir dosyadan merkezi olarak yöntebiliyoruz.
@@ -106,39 +103,10 @@ const TodosFunctionComponent = (props: TodosFunctionComponentProps) => {
   // todos && değer undefined veya null değilse o zaman domda göster
   return <> { todos &&  <ul style={{ listStyle: 'none' }}>
 
-    <form method="post" onSubmit={(e) => {
-      e.preventDefault(); // formu gönderme
-      // todos listesi üzerine yeni state değerini ekle
-      setTodos([{ id: todos.length + 1, title: todoForm.title, completed: todoForm.completed }, ...todos]);
-      // state üzerinden form resetleme
-      setTodoForm({title:'', completed:false});
-    }}>
-
-      <input value={todoForm.title} type="text" placeholder="todo title" onChange={(e) => {
-        // todoForm içerisinde target alından input value todoForm set et.
-        setTodoForm({ ...todoForm, title: e.target.value })
-      }} />
-
-      <input checked={todoForm.completed} type="checkbox" onChange={(e) => {
-        setTodoForm({ ...todoForm, completed: e.target.checked })
-      }} /> <label> Tamamlandı Mı ? </label>
-
-      <input type="submit" value="Ekle" />
-    </form>
+    <TodoFormComponent onFormSubmit={(formValue:TodoForm) => {
+      setTodos([{ id: todos.length + 1, title: formValue.title, completed: formValue.completed }, ...todos]);
+    }} />
     <hr></hr>
-
-    {/* <TodoForm onSubmited={(formData) => {
-       setTodos();
-    }}/> */}
-
-    {/* {todos.map((item: Todo) => { // map içinde bir html kod blogu döndürmek zorundayız
-      return <li key={item.id} style={item.completed ? { color: 'white', background: 'green' } : { color: 'red', background: 'gray' }} >
-        {item.title}
-        {' '} {item.completed ? 'Tamamlandı' : 'Tamamlanmadı'}
-
-        <button onClick={() => deleteItem(item.id)}>Sil</button>
-      </li>
-    })} */}
     {
       todos.map((item:Todo) => {
         // map içerisinde dönerken parametre gönderme işlemlerin () => funcName(paramteres) formatında yazmalıyız.
