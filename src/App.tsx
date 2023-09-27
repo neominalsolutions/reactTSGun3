@@ -1,5 +1,7 @@
 import { Link, Outlet, useRoutes } from "react-router-dom";
 import ClassComponentSample from "./pages/ClassComponentSample";
+import FunctionComponentSample from "./pages/FunctionComponentSample";
+import TodosFunctionComponent from "./pages/TodosFunctionComponent";
 
 function App() {
   // uygulamadaki tüm js dosya pathleri useRoutes hook ile uygulamaya tanıtılır
@@ -17,6 +19,10 @@ function App() {
             {/* sayfalar yenilenmeden js üzerinden spa uygulama yönlendirme için kullandık */}
       {/* a href yerine Link kullanıyoruz */}
       <Link to='/class-component'>Class Component Örnek</Link>
+      {' '}
+      <Link to='/func-component'>Function Component Örnek</Link>
+      {' '}
+      <Link to="/todo-component">Todo Component Sample</Link>
     </nav>
     <main style={{padding:'10px'}}>
       <Outlet /> 
@@ -39,6 +45,14 @@ function App() {
     {
       path:'class-component',
       element: <ClassComponentSample title="React Class Component" />
+    },
+    {
+      path:'func-component',
+      element: <FunctionComponentSample title="React Function Component" />
+    },
+    {
+      path:'todo-component',
+      element:<TodosFunctionComponent />
     }
   ]
 
