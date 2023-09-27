@@ -1,4 +1,6 @@
 import { Component, ReactNode } from "react";
+import { TodoAxiosApi } from "../api/todo.api";
+
 
 type classComponentProps = {
   title: string
@@ -11,6 +13,8 @@ type classComponentState = {
 class ClassComponentSample extends Component<classComponentProps, classComponentState> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   interval: any; // field
+
+  api;
 
   constructor(props: classComponentProps) {
     super(props);
@@ -25,6 +29,8 @@ class ClassComponentSample extends Component<classComponentProps, classComponent
     this.increaseCount = this.increaseCount.bind(this); // consturctorda class bir evente bağlandığını söylüyoruz
     // this.onClick+=
     this.decreaseCount = this.decreaseCount.bind(this);
+
+    this.api = new TodoAxiosApi('https://jsonplaceholder.typicode.com','todos');
   }
   // class içinde olduğumuzdan function tanımları method şeklinde yazılır, arrow function kullanılmaz
   increaseCount(): void {
